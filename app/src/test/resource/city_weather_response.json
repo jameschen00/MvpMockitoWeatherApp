@@ -1,0 +1,21 @@
+{
+  "coord" : {
+    "lat" : "lat",
+    "lon" : "lon"
+  },
+  "weather" : {
+    "id"    : "id",
+    "main"  : "main",
+    "description":"description",
+    "icon"  :"icon"
+  },
+  "base"  : "base",
+  "main"  : "main",
+  "wind"  : "wind",
+  "clouds": "clouds",
+  "dt"    : "dt",
+  "sys"   : "sys",
+  "id"    : "id",
+  "name"  : "name",
+  "cod"   : "cod"
+}

@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements Wheatherappview {
     WeatherMapService apiInterface;
     CityWeatherAdapter cityWeatherAdapter;
 
+    WeartherMapCallbackService weartherMapCallbackService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +52,13 @@ public class MainActivity extends AppCompatActivity implements Wheatherappview {
         imageViewSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                weatherAppPresenter.getWeatherInfo(selectCity.getText().toString());
+                String cityName = selectCity.getText().toString();
+                //weatherAppPresenter.getWeatherInfo(cityName);
+
+                //Another way
+                weartherMapCallbackService = new WeartherMapCallbackService(apiInterface);
+                weatherAppPresenter.getWeatherInfoWithCallback(cityName);
+
             }
         });
     }

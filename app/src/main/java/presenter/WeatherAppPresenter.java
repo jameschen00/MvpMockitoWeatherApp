@@ -1,8 +1,7 @@
 package presenter;
 
-import android.util.Log;
-
 import app.leftshift.com.mvpmockitoweatherapp.BuildConfig;
+import app.leftshift.com.mvpmockitoweatherapp.WeartherMapCallbackService;
 import model.CityWeather;
 import remote.WeatherMapService;
 import rx.Observable;
@@ -21,8 +20,9 @@ public class WeatherAppPresenter {
 
     WeatherMapService weatherMapService;
     CompositeSubscription compositeSubscription;
-    Subscription weatherinfoSubscription;
     Wheatherappview wheatherappview;
+
+    WeartherMapCallbackService weartherMapCallbackService;
     private final String apiKey = BuildConfig.OPENWEATHERMAP_API_KEY;
 
     public WeatherAppPresenter(Wheatherappview wheatherappview,WeatherMapService apiInterface) {
@@ -33,9 +33,8 @@ public class WeatherAppPresenter {
 
 
     public void getWeatherInfo(String selectedcity) {
-        Log.d("", "" + selectedcity);
         Observable<CityWeather> cityWeatherObservable = weatherMapService.getWeatherByCityName(selectedcity, apiKey);
-        weatherinfoSubscription = cityWeatherObservable.subscribeOn(Schedulers.io())
+        Subscription weatherinfoSubscription  = cityWeatherObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CityWeather>() {
@@ -57,5 +56,30 @@ public class WeatherAppPresenter {
                     }
                 });
         compositeSubscription.add(weatherinfoSubscription);
+    }
+
+
+    //Alternate Api Call in presenter which handles only success and errors
+
+    public void getWeatherInfoWithCallback(String selectedcity) {
+
+        Subscription weathercallbackSubscription = null;
+        weathercallbackSubscription = weartherMapCallbackService.getWeatherByCityName(selectedcity, apiKey,
+                new WeartherMapCallbackService.CityWeatherCallback() {
+                    @Override
+                    public void onError(Throwable throwable) {
+                        wheatherappview.showServerError(throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(CityWeather cityWeather) {
+                        if (cityWeather != null) {
+                            wheatherappview.showWeatherInfo(cityWeather);
+                        }
+                    }
+                });
+
+        compositeSubscription.add(weathercallbackSubscription);
+
     }
 }
