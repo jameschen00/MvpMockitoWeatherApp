@@ -29,7 +29,6 @@ import util.RxSchedulersOverrideRule;
 import view.Wheatherappview;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -39,6 +38,11 @@ import static org.mockito.Mockito.when;
 /**
  * Created by vrushali on 3/4/18.
  */
+
+/*
+    JUnit Runner provided by Mockito, Helps in initailising the Moc's
+ */
+
 @RunWith(MockitoJUnitRunner.class)
 public class WeatherAppPresenterTest {
 
