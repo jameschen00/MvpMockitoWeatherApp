@@ -1,4 +1,4 @@
-package app.leftshift.com.mvpmockitoweatherapp;
+package view;
 
 /**
  * Created by vrushali on 3/4/18.

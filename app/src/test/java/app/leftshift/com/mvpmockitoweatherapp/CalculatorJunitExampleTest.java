@@ -4,21 +4,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by vrushali on 3/4/18.
  */
-public class CalculatorTest {
+public class CalculatorJunitExampleTest {
 
 
-    //Calculator calculator = new Calculator();
 
-    Calculator calculator = null;
+    CalculatorJunitExample calculator = new CalculatorJunitExample();
 
     @Before
-    public void setUp() throws Exception {
-        calculator = new Calculator();
+    public void setUp(){
+
     }
 
     @Test
@@ -26,8 +25,8 @@ public class CalculatorTest {
         assertEquals(5, calculator.add(2,3));
     }
 
+
     @After
     public void tearDown() throws Exception {
     }
-
 }

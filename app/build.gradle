@@ -51,10 +51,10 @@ dependencies {
     //Mockito dependencies
 
     //Enale Android support,  have some limitations in the Android VM
-    //testCompile "org.mockito:mockito-core:+"
+    testCompile "org.mockito:mockito-core:+"
 
     //enables inline mock making without configuring the MockMaker extension file.
-    testCompile "org.mockito:mockito-inline:+"
+    //testCompile "org.mockito:mockito-inline:+"
     androidTestCompile "org.mockito:mockito-android:+"
 
     //retrofit and rx java

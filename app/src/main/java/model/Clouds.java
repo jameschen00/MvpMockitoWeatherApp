@@ -11,4 +11,8 @@ public class Clouds {
     @SerializedName("all")
     @Expose
     public Integer all;
+
+    public Clouds(Integer all) {
+        this.all = all;
+    }
 }

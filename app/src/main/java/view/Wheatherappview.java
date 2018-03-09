@@ -7,6 +7,7 @@ import model.CityWeather;
  */
 
 public interface Wheatherappview {
+
     void showServerError(String message);
 
     void showWeatherInfo(CityWeather cityWeather);

@@ -21,4 +21,11 @@ public class Sys {
     @SerializedName("sunset")
     @Expose
     public Integer sunset;
+
+    public Sys(Double message, String country, Integer sunrise, Integer sunset) {
+        this.message = message;
+        this.country = country;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
+    }
 }

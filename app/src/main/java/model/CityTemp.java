@@ -33,4 +33,16 @@ public class CityTemp {
     public double getTemp() {
         return temp;
     }
+
+    public CityTemp(Double temp, Double pressure, Integer humidity,
+                    Double tempMin, Double tempMax,
+                    Double seaLevel, Double grndLevel) {
+        this.temp = temp;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.tempMin = tempMin;
+        this.tempMax = tempMax;
+        this.seaLevel = seaLevel;
+        this.grndLevel = grndLevel;
+    }
 }

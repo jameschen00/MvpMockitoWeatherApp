@@ -14,4 +14,9 @@ public class Coord {
     @SerializedName("lat")
     @Expose
     public Double lat;
+
+    public Coord(Double lon, Double lat) {
+        this.lon = lon;
+        this.lat = lat;
+    }
 }

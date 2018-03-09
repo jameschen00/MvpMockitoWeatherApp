@@ -1,46 +1,39 @@
 package presenter;
 
-import com.google.gson.Gson;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 
-import app.leftshift.com.mvpmockitoweatherapp.WeartherMapCallbackService;
 import model.CityWeather;
-import okhttp3.MediaType;
-import okhttp3.Protocol;
-import okhttp3.Request;
-import okhttp3.ResponseBody;
 import remote.WeatherMapService;
-import retrofit2.Response;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
-import rx.Subscription;
 import util.RxSchedulersOverrideRule;
 import view.Wheatherappview;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static util.CityWeatherResponse.getCityTemp;
+import static util.CityWeatherResponse.getClouds;
+import static util.CityWeatherResponse.getCoord;
+import static util.CityWeatherResponse.getSys;
+import static util.CityWeatherResponse.getWeather;
+import static util.CityWeatherResponse.getWind;
+import static util.ErrorResponseGenerator.generateWithStatusMessageAndStatusCode;
 
 /**
  * Created by vrushali on 3/4/18.
  */
 
 /*
-    JUnit Runner provided by Mockito, Helps in initailising the Moc's
+    JUnit Runner provided by Mockito, Helps in initailising the Mock's
  */
 
 @RunWith(MockitoJUnitRunner.class)
@@ -52,114 +45,57 @@ public class WeatherAppPresenterTest {
     @Mock
     WeatherMapService weatherMapService;
 
-    @Mock
-    WeartherMapCallbackService weartherMapCallbackService;
-
     private WeatherAppPresenter weatherAppPresenter;
 
-    //TODO RX Schedular Rule - why,use
+
+    private CityWeather cityWeather;
+
+    // RX Schedular Rule - why,use -
     @Rule
     public RxSchedulersOverrideRule rxSchedulersOverrideRule = new RxSchedulersOverrideRule();
 
-    final String CONST_CITY_WEATHER_API_FILE = "city_weather_response.json";
-
-    CityWeather cityWeatherResponse;
-    Gson gson;
-
-    //Define Subsciption  :- why, what is use
-    public static final Subscription SUBSCRIPTION = new Subscription() {
-        @Override
-        public void unsubscribe() {
-
-        }
-
-        @Override
-        public boolean isUnsubscribed() {
-            return false;
-        }
-    };
-
-
     @Before
     public void setup() throws IOException {
-        weatherAppPresenter = new WeatherAppPresenter(wheatherappview, weatherMapService);
-
-       /* gson = new Gson();
-        cityWeatherResponse = gson.fromJson(new WeatherAppResponseGenerator(
-                "city_weather_response").readAll(), CityWeather.class);*/
+        weatherAppPresenter = new WeatherAppPresenter(wheatherappview,
+                weatherMapService);
     }
 
     @Test
-    public void getWeatherInfoApiCall() throws Exception{
+    public void testShouldVerifyIfGetWeatherInfoByCityIsCalled()  {
+
+        String selectedcity =  "Pune";
+        String appId = "AppId";
 
         //Given
-        WeartherMapCallbackService.CityWeatherCallback cityWeatherCallback = Mockito.mock(WeartherMapCallbackService.CityWeatherCallback.class);
-        weartherMapCallbackService = Mockito.mock(WeartherMapCallbackService.class);
-        final CityWeather cityWeather = new CityWeather();
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                ((WeartherMapCallbackService.CityWeatherCallback) invocation.getArguments()[0]).onSuccess(cityWeather);
-                return SUBSCRIPTION;
-            }
-        }).when(weartherMapCallbackService.getWeatherByCityName("selectedcity",
-                "appId",cityWeatherCallback));
+        CityWeather cityWeather  = new CityWeather(getCoord(), getWeather(), "base", getCityTemp(),
+                                    getWind(), getClouds(), 11, getSys(), 33, "name", 33);
 
-        //when
-        weatherAppPresenter.getWeatherInfoWithCallback(anyString());
-
-        verify(wheatherappview).showWeatherInfo(cityWeather);
-    }
-
-
-
-    @Test
-    public void getWeatherInfo()  {
-
-        CityWeather cityWeather  = new CityWeather();
-        String selectedcity = "selectedCity";
-        String appId = "appId";
         Observable<CityWeather> cityWeatherObservable = Observable.just(cityWeather);
 
         when(weatherMapService.getWeatherByCityName(eq(selectedcity), eq(appId))).thenReturn(cityWeatherObservable);
 
-        //When
-        weatherAppPresenter.getWeatherInfo(selectedcity);
+       //When
+        weatherAppPresenter.getWeatherInfoByCity(selectedcity, appId);
+
 
         //Then
         verify(wheatherappview).showWeatherInfo(cityWeather);
     }
-
-
-
     @Test
-    public void getWeatherInfoAPiThrowsServerError()throws Exception{
-        String selectedcity = "selectedCity";
-        String appId = "appId";
-        doReturn(Observable.error(generateWithStatusMessageAndStatusCode("error", 401))).
-                when(weatherMapService.getWeatherByCityName(selectedcity,appId));
+    public void getWeatherInfoAPiThrowsServerError() throws Exception {
 
-        weatherAppPresenter.getWeatherInfo(selectedcity);
+        //Given
 
-        verify(wheatherappview).showServerError("error");
-
-    }
+        doReturn(Observable.error(generateWithStatusMessageAndStatusCode(
+                "HTTP 402 null", 402))).
+                when(weatherMapService).getWeatherByCityName(anyString(), anyString());
 
 
-    public static Throwable generateWithStatusMessageAndStatusCode(String value, int statusCode) {
-        Request request = new Request.Builder()
-                .url("http://www.publicobject.com/helloworld.txt")
-                .header("User-Agent", "OkHttp Example")
-                .build();
-        return new HttpException(
-                Response.error(
-                        ResponseBody.create(MediaType.parse("application/json"),
-                                String.format("{\"statusMessage\":\"%s\"}", value)),
-                        new okhttp3.Response.Builder()
-                                .request(request).protocol(Protocol.HTTP_2)
-                                .code(statusCode)
-                                .addHeader("Error-Message", value).build()
-                )
-        );
+        //When
+        weatherAppPresenter.getWeatherInfoByCity("Pune", "AppId");
+
+        //Then
+        verify(wheatherappview).showServerError("HTTP 402 null");
+
     }
 }

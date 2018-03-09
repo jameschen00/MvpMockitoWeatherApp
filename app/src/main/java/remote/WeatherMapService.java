@@ -14,6 +14,4 @@ public interface WeatherMapService {
     @GET("weather")
     Observable<CityWeather> getWeatherByCityName(@Query("q") String cityName, @Query("appid") String appId);
 
-    @GET
-    public Observable<CityWeather> getWeatherByCityId(@Query("id") long cityId, @Query("appid") String appId);
 }
