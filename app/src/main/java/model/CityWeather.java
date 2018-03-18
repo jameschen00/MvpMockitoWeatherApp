@@ -130,4 +130,19 @@ public class CityWeather {
         this.cod = cod;
     }
 
+    public CityWeather(Coord coord, List<Weather> weather, String base, CityTemp main, Wind wind, Clouds clouds,
+                       Integer dt, Sys sys, Integer id,
+                       String name, Integer cod) {
+        this.coord = coord;
+        this.weather = weather;
+        this.base = base;
+        this.main = main;
+        this.wind = wind;
+        this.clouds = clouds;
+        this.dt = dt;
+        this.sys = sys;
+        this.id = id;
+        this.name = name;
+        this.cod = cod;
+    }
 }

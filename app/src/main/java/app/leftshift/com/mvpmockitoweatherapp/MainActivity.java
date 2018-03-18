@@ -25,12 +25,11 @@ public class MainActivity extends AppCompatActivity implements Wheatherappview {
     private RecyclerView showInfoRecyclerView;
     private ImageView imageViewSearch;
     private RelativeLayout relativeWeatherInfoLayout;
-    private RecyclerView.LayoutManager mLayoutManager;
     WeatherAppPresenter weatherAppPresenter;
     WeatherMapService apiInterface;
     CityWeatherAdapter cityWeatherAdapter;
 
-    WeartherMapCallbackService weartherMapCallbackService;
+    String apiKey = BuildConfig.OPENWEATHERMAP_API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +51,10 @@ public class MainActivity extends AppCompatActivity implements Wheatherappview {
         imageViewSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cityName = selectCity.getText().toString();
-                //weatherAppPresenter.getWeatherInfo(cityName);
 
-                //Another way
-                weartherMapCallbackService = new WeartherMapCallbackService(apiInterface);
-                weatherAppPresenter.getWeatherInfoWithCallback(cityName);
+                String cityName = selectCity.getText().toString();
+
+                weatherAppPresenter.getWeatherInfoByCity(cityName,apiKey);
 
             }
         });

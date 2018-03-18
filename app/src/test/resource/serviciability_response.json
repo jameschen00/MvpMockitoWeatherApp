@@ -1,0 +1,72 @@
+{
+  "Instant": {
+    "shipment_method": "Instant",
+    "shipment_method_description": "1-2 jam waktu pengiriman",
+    "serviceable": true,
+    "active": true,
+    "distance": 3.4,
+    "route_polyline": "xnud@og`kSt@?LC\\WbBkBRCHBr@l@LYfAcAPWHW?OAu@De@H]dBa@tGyArBs@t@]d@_@l@q@Ta@Dc@?a@M{@k@cCP[POVK^CfBnBB\\ET]Tc@b@e@x@YbAk@|@uA`AaAd@_@JiEdAOZGd@CxAT|HL~EAdETfLLnF~AEdEKpEa@a@_JIeFOmDIsGbDr@NB",
+    "price": {
+      "dynamic_surge_enabled": false,
+      "cash": {
+        "total_price": 9000,
+        "discount": 0,
+        "message": "",
+        "voucher": {
+          "total_price": 0,
+          "discount": 9000,
+          "overriden_discount": 0,
+          "voucher_monetary_value": 20000,
+          "message": ""
+        }
+      },
+      "go_pay": {
+        "total_price": 7000,
+        "discount": 2000,
+        "message": "Pakai GO-PAY dan hemat Rp2000",
+        "voucher": {
+          "total_price": 0,
+          "discount": 9000,
+          "overriden_discount": 0,
+          "voucher_monetary_value": 20000,
+          "message": ""
+        }
+      }
+    }
+  },
+  "SameDay": {
+    "shipment_method": "Same Day",
+    "shipment_method_description": "Layanan SameDay belum tersedia di wilayah Anda",
+    "serviceable": true,
+    "active": true,
+    "distance": 3.4,
+    "route_polyline": "routePolyline",
+    "price": {
+      "dynamic_surge_enabled": true,
+      "cash": {
+        "total_price": 122,
+        "discount": 0,
+        "message": "",
+        "voucher": {
+          "total_price": 0,
+          "discount": 9000,
+          "overriden_discount": 0,
+          "voucher_monetary_value": 20000,
+          "message": ""
+        }
+      },
+      "go_pay": {
+        "total_price": 0,
+        "discount": 2000,
+        "message": "Pakai GO-PAY dan hemat Rp2000",
+        "voucher": {
+          "total_price": 0,
+          "discount": 9000,
+          "overriden_discount": 0,
+          "voucher_monetary_value": 20000,
+          "message": ""
+        }
+      }
+    }
+  }
+}

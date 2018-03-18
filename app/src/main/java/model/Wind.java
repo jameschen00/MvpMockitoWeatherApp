@@ -14,4 +14,9 @@ public class Wind {
     @SerializedName("deg")
     @Expose
     public double deg;
+
+    public Wind(Double speed, double deg) {
+        this.speed = speed;
+        this.deg = deg;
+    }
 }
