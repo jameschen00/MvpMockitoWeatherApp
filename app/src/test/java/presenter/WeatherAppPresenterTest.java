@@ -1,5 +1,6 @@
 package presenter;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import view.Wheatherappview;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static util.CityWeatherResponse.getCityTemp;
@@ -50,7 +52,11 @@ public class WeatherAppPresenterTest {
 
     private CityWeather cityWeather;
 
-    // RX Schedular Rule - why,use -
+    /*
+        RxSchedulersOverrideRule will help to create - the stubs of the
+        Not interact with actual RX java methods
+     */
+
     @Rule
     public RxSchedulersOverrideRule rxSchedulersOverrideRule = new RxSchedulersOverrideRule();
 
@@ -60,27 +66,37 @@ public class WeatherAppPresenterTest {
                 weatherMapService);
     }
 
+
+    /* Objective :-
+        1. Ensure getWeatherByCityName is called or Not
+        2. Verify using interface Method
+       */
+
+
     @Test
     public void testShouldVerifyIfGetWeatherInfoByCityIsCalled()  {
-
-        String selectedcity =  "Pune";
+        //Given
+        String city =  "Pune";
         String appId = "AppId";
 
-        //Given
         CityWeather cityWeather  = new CityWeather(getCoord(), getWeather(), "base", getCityTemp(),
                                     getWind(), getClouds(), 11, getSys(), 33, "name", 33);
 
         Observable<CityWeather> cityWeatherObservable = Observable.just(cityWeather);
 
-        when(weatherMapService.getWeatherByCityName(eq(selectedcity), eq(appId))).thenReturn(cityWeatherObservable);
+        when(weatherMapService.getWeatherByCityName(eq(city), eq(appId))).
+                thenReturn(cityWeatherObservable);
 
        //When
-        weatherAppPresenter.getWeatherInfoByCity(selectedcity, appId);
+        weatherAppPresenter.getWeatherInfoByCity(city, appId);
 
 
         //Then
         verify(wheatherappview).showWeatherInfo(cityWeather);
     }
+
+
+
     @Test
     public void getWeatherInfoAPiThrowsServerError() throws Exception {
 
@@ -97,5 +113,14 @@ public class WeatherAppPresenterTest {
         //Then
         verify(wheatherappview).showServerError("HTTP 402 null");
 
+    }
+
+    @After
+    public void tearDown(){
+        /*
+            1.  runner would do for you automatically
+            2.  help determine whether you've misused matchers.
+         */
+        validateMockitoUsage();
     }
 }

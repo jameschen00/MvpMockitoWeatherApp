@@ -16,21 +16,23 @@ import static org.junit.Assert.assertEquals;
  */
 
 
-/*
-  enable Mockito annotation (such as @Spy, @Mock,
-  1. Call the method --> MockitoAnnotations.initMocks(this) to initialize annotated fields.
-  2.Use the built-in runner @RunWith(MockitoJUnitRunner.class)
-
+/*Enable Mockito annotation (such as @Spy, @Mock,
+  @RunWith(MockitoJUnitRunner.class)
 */
 
 @RunWith(MockitoJUnitRunner.class)
 public  class ExampleSpyTest {
 
 
-    //Simple Spy Object
+    /*
+        1.Spy on real object,
+        2. allow us to call all normal method
+        3. track every interaction
+     */
 
     @Test
     public void whenSpyingOnList_thenCorrect() {
+
         List<String> list = new ArrayList<String>();
         List<String> spyList = Mockito.spy(list);
 
@@ -61,6 +63,10 @@ public  class ExampleSpyTest {
 
     // Stubbing a Spy
 
+    /*
+        1. make spy list return what you want to return
+     */
+
     @Test
     public void whenStubASpy_thenStubbed() {
         List<String> list = new ArrayList<String>();
@@ -74,17 +80,17 @@ public  class ExampleSpyTest {
     }
 
 
-   // Mock VS Spy in  Mockito
+
+    // Mock Versus Spy in  Mockito
 
 
-    /*
-        1. When Mockito creates a mock – it does so from the Class of an Type, not from an actual instance.
-        2. The mock simply creates a bare-bones shell instance of the Class,
+    /*1. When Mockito creates a mock –
+         it does so from the Class of an Type, not from an actual instance.*/
 
-     */
     @Test
     public void whenCreateMock_thenCreated() {
-        List mockedList = Mockito.mock(ArrayList.class);  //bare-bones shell instantce of the class
+
+        List mockedList = Mockito.mock(ArrayList.class);
 
         mockedList.add("one");
         Mockito.verify(mockedList).add("one");
@@ -93,8 +99,7 @@ public  class ExampleSpyTest {
     }
 
 
-    /*
-        1. the spy will wrap an existing instance
+    /*  1. the spy will wrap an existing instance
         2. It will still behave in the same way as the normal instance */
 
     @Test

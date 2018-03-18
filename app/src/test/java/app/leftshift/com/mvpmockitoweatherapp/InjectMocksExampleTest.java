@@ -19,9 +19,9 @@ import static junit.framework.Assert.assertEquals;
 public class InjectMocksExampleTest {
 
 
-    /*
-        we use @InjectMocks -  to inject the mock wordMap into the MyDictionary dic:
-    */
+    //we use @InjectMocks -
+    //  to inject the mock wordMap into the MyDictionary dic:
+
 
     @Mock
     Map<String, String> wordMap;
@@ -36,7 +36,8 @@ public class InjectMocksExampleTest {
 
         Mockito.when(wordMap.get("injectMock")).thenReturn("mockAndInjectSameTime");
 
-        assertEquals("mockAndInjectSameTime", dic.getMeaning("injectMock"));
+        assertEquals("mockAndInjectSameTime",
+                dic.getMeaning("injectMock"));
     }
 
 }

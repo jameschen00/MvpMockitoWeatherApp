@@ -6,5 +6,5 @@ package view;
 
 public interface CalculatorService {
 
-    public int add(int First, int Second);
+    int add(int First, int Second);
 }

@@ -5,6 +5,4 @@ package TestDoubles;
  */
 
 public class TestStub {
-
-
 }

@@ -28,9 +28,10 @@ public class WeatherAppPresenter {
     }
 
 
-    public void getWeatherInfoByCity(String selectedcity, String apiKey) {
+    public void getWeatherInfoByCity(String cityName, String apiKey) {
 
-        Observable<CityWeather> cityWeatherObservable = weatherMapService.getWeatherByCityName(selectedcity, apiKey);
+        Observable<CityWeather> cityWeatherObservable =
+                weatherMapService.getWeatherByCityName(cityName, apiKey);
 
         Subscription weatherinfoSubscription = cityWeatherObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,6 +50,7 @@ public class WeatherAppPresenter {
                     @Override
                     public void onNext(CityWeather cityWeather) {
                         if (cityWeather != null) {
+
                             wheatherappview.showWeatherInfo(cityWeather);
                         }
                     }

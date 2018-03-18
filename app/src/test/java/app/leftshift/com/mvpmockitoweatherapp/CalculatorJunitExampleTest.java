@@ -12,13 +12,16 @@ import static org.junit.Assert.assertEquals;
 public class CalculatorJunitExampleTest {
 
 
-
-    CalculatorJunitExample calculator = new CalculatorJunitExample();
+    CalculatorJunitExample calculator;
 
     @Before
     public void setUp(){
-
+        calculator = new CalculatorJunitExample();
     }
+
+    /*   objective :- Call calculator add
+        check if it's returning correct value
+    */
 
     @Test
     public void addTwoIntegers() throws Exception{

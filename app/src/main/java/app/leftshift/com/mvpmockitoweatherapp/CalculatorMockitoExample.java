@@ -11,7 +11,6 @@ public class CalculatorMockitoExample {
     private CalculatorService service;
 
     public CalculatorMockitoExample(CalculatorService service) {
-
         this.service = service;
     }
 

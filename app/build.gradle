@@ -48,9 +48,8 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
 
-    //Mockito dependencies
+    //Mockito dependenMcies
 
-    //Enale Android support,  have some limitations in the Android VM
     testCompile "org.mockito:mockito-core:+"
 
     //enables inline mock making without configuring the MockMaker extension file.
